@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for contracts\MySafeFactory.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">contracts/</a> MySafeFactory.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>16/16</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>5/5</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>17/17</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// SPDX-License-Identifier: MIT
+pragma solidity &gt;=0.6.12 &lt;0.9.0;
+&nbsp;
+import "@openzeppelin/contracts/proxy/Clones.sol"; //follow openzeppelin's proxy cloning method
+import "@openzeppelin/contracts/utils/Create2.sol"; //also follows openzeppelin's create2 method
+import "./MyOwnSafe.sol";
+import "./MyOwnSafeUpgradeable.sol";
+&nbsp;
+contract MyOwnSafeFactory {
+    address public implementation; //used to create proxies/clones of this contract.
+&nbsp;
+    event SafeDeployed(address indexed newSafeDeployed);
+    event SafeDeployedwithCreate2(address indexed newCreate2Deployed);
+    event SafeDeployedUpgradeable(address indexed newSafeDeployedUpgradeable);
+    event SafeDeployedUpgradeablewithCreate2(address indexed newCreate2DeployedUpgradeable);
+&nbsp;
+    constructor() {
+        //stores the address of a new MyOwnSafeUpgradeable contract.
+        implementation = address(new MyOwnSafeUpgradeable()); 
+    }
+&nbsp;
+    function deploySafe(address _owner) public returns (address) {
+        //use the 'new' keyword to deploy new MyOwnSafe instance
+        MyOwnSafe newSafe = new MyOwnSafe(_owner); 
+        emit SafeDeployed(address(newSafe));
+        return address(newSafe);
+    }
+&nbsp;
+    function deploySafeWithCreate2(address _owner) public returns (address) {
+        //creates a salt that uses the owner's address and the block's timestamp to ensure a deterministic address
+        bytes32 salt = keccak256(abi.encodePacked(_owner, block.timestamp));
+        //uses openzeppelin's library for Create2 to deploy new instance.
+        address newCreate2 = Create2.deploy(0, salt, abi.encodePacked(type(MyOwnSafe).creationCode, abi.encode(_owner)));
+        emit SafeDeployedwithCreate2(newCreate2);
+        return newCreate2;
+    }
+&nbsp;
+    function deploySafeUpgradeable(address _owner) public returns (address) {
+        //proxy deployment, uses openzeppelin's clone library to deploy a MyOwnSafeUpgradeable instance.
+        address clone = Clones.clone(implementation);
+        MyOwnSafeUpgradeable(clone).initialize(_owner);
+        emit SafeDeployedUpgradeable(clone);
+        return clone;
+    }
+&nbsp;
+    function deploySafeUpgradeableWithCreate2(address _owner) public returns (address) {
+        //minimal proxy, makes use of cloneDeterministic function to deploy new MyOwnSafeUpgradeable instance.
+        bytes32 salt = keccak256(abi.encodePacked(_owner, block.timestamp));
+        address clone = Clones.cloneDeterministic(implementation, salt);
+        MyOwnSafeUpgradeable(clone).initialize(_owner);
+        emit SafeDeployedUpgradeablewithCreate2(clone);
+        return clone;
+    }
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri May 24 2024 07:43:58 GMT+0800 (Taipei Standard Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
