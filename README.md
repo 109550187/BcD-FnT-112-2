@@ -10,11 +10,9 @@ Blockchain Development and Financial Technology Lab#5:
 
 result of coverage:
 Version
-=======
 > solidity-coverage: v0.8.12
 
 Instrumenting for coverage...
-=============================
 
 > Lock.sol
 > MyOwnSafe.sol
@@ -23,12 +21,10 @@ Instrumenting for coverage...
 > MySafeFactory.sol
 
 Compilation:
-============
 
 Nothing to compile
 
 Network Info
-============
 > HardhatEVM: v2.22.4
 > network:    hardhat
 
