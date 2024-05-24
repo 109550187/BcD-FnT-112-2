@@ -6,6 +6,7 @@ Blockchain Development and Financial Technology Lab#5:
 - install dependency needed for contracts.
 - write the test files for each contract making use of Solidity Test Coverage. (using https://hardhat.org/hardhat-runner/docs/guides/test-contracts as ref.)
 - use hardhat-gas-reporter to assess gas usage of each function
+- please note that i have not attached the node_modules folder here because apparently it has waaay too many files and folders inside of it. shouldn't be a problem i think..
 
 result of coverage:
 Version
